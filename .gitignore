@@ -1,0 +1,8 @@
+# Folders
+*/node_modules
+*/build
+*/.idea
+
+# Configs
+*/.env
+*/package-lock.json
