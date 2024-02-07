@@ -1,7 +1,11 @@
-import express, {Express} from "express";
+import express, {Express, Request, Response} from "express";
 import * as dotenv from "dotenv";
 
 import Database from "./misc/db";
+
+import registerRouter from "./routes/register.router";
+import usersRouter from "./routes/users.router";
+import defectsRouter from "./routes/defects.router";
 
 dotenv.config()
 
@@ -14,9 +18,13 @@ new Database(MONGO_URI)
     .init()
     .catch(e => console.log(e));
 
-const app: Express = express()
+const app: Express = express();
 
-app.get('/', (req, res) => {
+app.use('/api/register', registerRouter);
+app.use('/api/users', usersRouter);
+app.use('/api/defects', defectsRouter);
+
+app.get('/', (_: Request, res: Response) => {
     res.send("Hello, World");
 });
 
