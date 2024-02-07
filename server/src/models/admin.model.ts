@@ -8,9 +8,9 @@ export interface IAdmin extends mongoose.Document {
 }
 
 const AdminSchema = new mongoose.Schema<IAdmin>({
-    login: {type: String, unique: true},
-    password: {type: String},
-    name: {type: String},
+    login: {type: String, unique: true, required: true},
+    password: {type: String, required: true},
+    name: {type: String, required: true},
     surname: {type: String}
 });
 
