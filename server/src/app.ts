@@ -1,5 +1,6 @@
 import express, {Express, Request, Response} from "express";
 import * as dotenv from "dotenv";
+import bodyParser from "body-parser";
 
 import Database from "./misc/db";
 
@@ -19,6 +20,8 @@ new Database(MONGO_URI)
     .catch(e => console.log(e));
 
 const app: Express = express();
+
+app.use(bodyParser.json());+
 
 app.use('/api/register', registerRouter);
 app.use('/api/users', usersRouter);
