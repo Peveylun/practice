@@ -2,15 +2,15 @@ import {Router, Request, Response} from "express";
 
 const router: Router = Router();
 
-router.get('/', (req: Request, res: Response) => {
+router.get('/', (_: Request, res: Response) => {
     res.send('POST /api/defects');
 })
 
-router.put('/:id/close', (req: Request, res: Response) => {
+router.put('/:id/close', (_: Request, res: Response) => {
     res.send('POST /api/defects/:id/close');
 })
 
-router.post('/', (req: Request, res: Response) => {
+router.post('/', (_: Request, res: Response) => {
     res.send('POST /api/defects');
 })
 

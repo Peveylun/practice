@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
 
-export interface IDatabase {
+interface IDatabase {
     init(): Promise<void>
 }
 
-export default class Database {
+export default class Database implements IDatabase{
     private readonly mongoURI: string | undefined;
 
     constructor(mongoURI: string | undefined) {

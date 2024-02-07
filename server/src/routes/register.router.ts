@@ -2,7 +2,7 @@ import {Router, Request, Response} from "express";
 
 const router: Router = Router();
 
-router.post('/', (req: Request, res: Response) => {
+router.post('/', (_: Request, res: Response) => {
     res.send('POST /api/register');
 })
 
