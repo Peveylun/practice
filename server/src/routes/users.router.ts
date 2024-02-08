@@ -1,21 +1,14 @@
 import {Router, Request, Response} from "express";
+import userController from "../controllers/user.controller";
 
 const router = Router();
 
-router.get('/', (_: Request, res: Response) => {
-    res.send('GET /api/users');
-});
+router.get('/', userController.getAll);
 
-router.get('/:id', (_: Request, res: Response) => {
-    res.send('GET /api/users/:id');
-})
+router.get('/:telegramId', userController.getOne);
 
-router.put('/:id', (_: Request, res: Response) => {
-    res.send('PUT /api/users/:id');
-});
+router.put('/:telegramId', userController.update);
 
-router.get('/', (_: Request, res: Response) => {
-    res.send('GET /api/users/:id');
-});
+router.delete('/:telegramId', userController.delete);
 
 export default router;

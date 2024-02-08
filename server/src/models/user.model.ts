@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, {Schema} from "mongoose";
 
 export interface IUser extends mongoose.Document {
     telegramId: number;
@@ -6,7 +6,8 @@ export interface IUser extends mongoose.Document {
     surname: string;
     registeredAt: Date;
     role: string;
-    work_score: number
+    work_score: number;
+    access: boolean;
 }
 
 const UserSchema = new mongoose.Schema<IUser>({
@@ -15,7 +16,8 @@ const UserSchema = new mongoose.Schema<IUser>({
     surname: {type: String},
     registeredAt: {type: Date},
     role: {type: String, required: true, default: "User"},
-    work_score: {type: Number, required: true, default: 0}
+    work_score: {type: Number, required: true, default: 0},
+    access: {type: Boolean, default: false}
 });
 
 export const User = mongoose.model<IUser>("User", UserSchema);

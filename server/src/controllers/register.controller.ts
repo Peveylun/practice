@@ -14,5 +14,7 @@ export default {
         });
 
         await user.save();
+
+        res.json({message: "User saved"});
     }
 }
