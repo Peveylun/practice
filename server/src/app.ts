@@ -4,7 +4,7 @@ import bodyParser from "body-parser";
 
 import Database from "./misc/db";
 
-import registerRouter from "./routes/register.router";
+import registerRouter from "./routes/auth.router";
 import usersRouter from "./routes/users.router";
 import defectsRouter from "./routes/defects.router";
 
