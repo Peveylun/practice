@@ -1,18 +1,13 @@
-import {Router, Request, Response} from "express";
+import {Router} from "express";
+import DefectsController from "../controllers/defects.controller";
 
 const router: Router = Router();
 
-router.get('/', (_: Request, res: Response) => {
-    res.send('POST /api/defects');
-})
+router.get('/', DefectsController.read);
 
-router.put('/:id/close', (_: Request, res: Response) => {
-    res.send('POST /api/defects/:id/close');
-})
+router.put('/:id/close', DefectsController.update);
 
-router.post('/', (_: Request, res: Response) => {
-    res.send('POST /api/defects');
-})
+router.post('/', DefectsController.create);
 
 
 
