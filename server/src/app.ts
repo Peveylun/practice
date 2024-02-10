@@ -4,7 +4,7 @@ import bodyParser from "body-parser";
 
 import Database from "./misc/db";
 
-import registerRouter from "./routes/auth.router";
+import authRouter from "./routes/auth.router";
 import usersRouter from "./routes/users.router";
 import defectsRouter from "./routes/defects.router";
 
@@ -21,9 +21,11 @@ new Database(MONGO_URI)
 
 const app: Express = express();
 
-app.use(bodyParser.json());+
+app.use(bodyParser.json());
 
-app.use('/api/register', registerRouter);
+app.use(express.static('defectsImage'));
+
+app.use('/api/auth', authRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/defects', defectsRouter);
 
