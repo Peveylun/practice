@@ -32,8 +32,8 @@ export default {
 
     update: async(req: Request, res: Response) => {
         try {
-            const updatedDefect = await Defect.findByIdAndUpdate(req.body._id, {$set: {
-                status: req.body.status,
+            const updatedDefect = await Defect.findByIdAndUpdate(req.params.id, {$set: {
+                status: true,
                 closedAt: Date.now()
             }});
 
