@@ -23,15 +23,21 @@ export default {
         }
     },
 
-    read: async(req: Request, res: Response) => {
+    read: async(_: Request, res: Response) => {
         try {
-
+            const users = await Defect.find();
+            res.status(200).json(users);
         } catch (e) { res.status(500).json({error: 'Get defects failure'}) }
     },
 
     update: async(req: Request, res: Response) => {
         try {
+            const updatedDefect = await Defect.findByIdAndUpdate(req.body._id, {$set: {
+                status: req.body.status,
+                closedAt: Date.now()
+            }});
 
+            res.status(200).json(updatedDefect)
         } catch (e) { res.status(500).json({error: 'Update defect failure'}) }
     }
 }
