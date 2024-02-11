@@ -8,7 +8,7 @@ router.get('/', DefectsController.read);
 
 router.put('/:id/close', DefectsController.update);
 
-router.post('/', upload.single('file'), DefectsController.create);
+router.post('/', upload.single('image'), DefectsController.create);
 
 
 
