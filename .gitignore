@@ -4,6 +4,7 @@ node_modules
 */build
 */.idea
 .idea
+*/uploads
 
 # Configs
 */.env

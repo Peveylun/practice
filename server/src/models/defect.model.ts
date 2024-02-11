@@ -1,8 +1,8 @@
-import mongoose from "mongoose";
+import mongoose, {Schema} from "mongoose";
 import {IUser} from "./user.model";
 
 export interface IDefect extends mongoose.Document {
-    title: string;
+    roomNumber: number;
     description: string;
     status: boolean;
     reportedBy: IUser;
@@ -12,7 +12,7 @@ export interface IDefect extends mongoose.Document {
 }
 
 const DefectSchema = new mongoose.Schema<IDefect>({
-    title: { type: String, required: true },
+    roomNumber: { type: Number, required: true },
     description: { type: String, required: true },
     status: { type: Boolean, default: false },
     reportedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },

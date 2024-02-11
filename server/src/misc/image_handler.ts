@@ -1,13 +1,13 @@
 import multer from 'multer';
-import moment from 'moment';
+import path from "path";
 
 const storage = multer.diskStorage({
-    destination: (req, file, callback) => {
-        callback(null, '/defectsImage');
+    destination: (req, file, cb) => {
+        cb(null, path.join(__dirname, '..', '..', 'uploads'));
     },
-    filename: (req, file, callback) => {
-        callback(null, moment(Date.now()).format('DD-MM-YYYY') + '-defect')
+    filename: (req, file, cb) => {
+        cb(null, 'defect-' + Date.now() + path.extname(file.originalname));
     }
 })
 
-export const upload = multer({ storage }).single('image');
+export const upload = multer({ storage });

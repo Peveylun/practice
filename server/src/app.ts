@@ -22,6 +22,7 @@ new Database(MONGO_URI)
 const app: Express = express();
 
 app.use(bodyParser.json());
+app.use(express.urlencoded({extended: true}));
 
 app.use(express.static('defectsImage'));
 
