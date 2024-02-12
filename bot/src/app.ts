@@ -1,5 +1,5 @@
 import TelegramBot, {KeyboardButton} from "node-telegram-bot-api";
-import authController from "./controllers/auth.controller";
+import authController from "./controllers/auth";
 import * as dotenv from "dotenv";
 import AuthKeyboard from "./keyboards/auth";
 
