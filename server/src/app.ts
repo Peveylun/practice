@@ -12,7 +12,7 @@ dotenv.config()
 
 const HOST: string = process.env.HOST || "localhost";
 // @ts-ignore
-const PORT: number = +process.env.PORT || 80;
+const PORT: number = process.env.PORT || 80;
 const MONGO_URI: string | undefined = process.env.MONGO_URI;
 
 new Database(MONGO_URI)

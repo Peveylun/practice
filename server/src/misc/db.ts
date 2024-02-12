@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-interface IDatabase {
+type IDatabase = {
     init(): Promise<void>
 }
 

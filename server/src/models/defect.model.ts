@@ -1,15 +1,15 @@
-import mongoose, {Schema} from "mongoose";
+import mongoose from "mongoose";
 import {IUser} from "./user.model";
 
-export interface IDefect extends mongoose.Document {
+export type IDefect = {
     roomNumber: number;
     description: string;
     status: boolean;
     reportedBy: IUser;
     createdAt: Date;
     closedAt?: Date;
-    imageUrl: String;
-}
+    imageUrl: string;
+} & mongoose.Document
 
 const DefectSchema = new mongoose.Schema<IDefect>({
     roomNumber: { type: Number, required: true },
