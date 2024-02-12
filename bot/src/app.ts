@@ -1,7 +1,8 @@
 import TelegramBot, {KeyboardButton} from "node-telegram-bot-api";
-import authController from "./controllers/auth";
+import authController from "./controllers/authController";
 import * as dotenv from "dotenv";
-import AuthKeyboard from "./keyboards/auth";
+import AuthKeyboard from "./keyboards/authKeyboards";
+import authHandler from "./handlers/authHandler";
 
 dotenv.config();
 
@@ -17,4 +18,4 @@ bot.onText(/\/start/, async(msg) => {
     })
 });
 
-bot.onText(/\/login/, authController.login);
+bot.on('message', authHandler.start);

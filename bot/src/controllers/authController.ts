@@ -27,5 +27,8 @@ export default {
         } catch (e) {
             await bot.sendMessage(msg.chat.id, 'Login failure');
         }
+    },
+    help: async(msg: TelegramBot.Message)=> {
+        await bot.sendMessage(msg.chat.id, 'Help');
     }
 }
