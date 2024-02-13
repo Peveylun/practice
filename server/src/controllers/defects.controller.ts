@@ -1,6 +1,8 @@
 import {Request, Response} from "express";
 import {Defect} from "../models/defect.model";
 import {User} from "../models/user.model";
+import * as fs from "fs";
+import path from "path";
 
 export default {
     create: async (req: Request, res: Response) => {
@@ -39,5 +41,20 @@ export default {
 
             res.status(200).json(updatedDefect)
         } catch (e) { res.status(500).json({error: 'Update defect failure'}) }
+    },
+
+    readImage: async(req: Request, res: Response) => {
+        try {
+            const defect = await Defect.findOne({_id: req.params.id}).exec();
+            if (!defect) return res.json({error: 'Defect not found'});
+            const filename = defect.imageUrl;
+
+            const promise = fs.promises.readFile(path.join(__dirname, '..', '..', 'uploads', filename));
+
+            Promise.resolve(promise).then(buffer => {
+                res.json({photo: buffer});
+            })
+
+        } catch (e) {console.log(e)}
     }
 }

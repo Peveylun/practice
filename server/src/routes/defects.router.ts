@@ -7,13 +7,13 @@ const router: Router = Router();
 
 router.get('/', DefectsController.read);
 
+router.get('/:id', DefectsController.readImage);
+
 router.put('/:id/close', DefectsController.update);
 
 router.post('/', upload.single('image'),
     body(['description', 'roomNumber'])
         .notEmpty(),
     DefectsController.create);
-
-
 
 export default router;

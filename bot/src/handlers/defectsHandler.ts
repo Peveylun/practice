@@ -9,6 +9,9 @@ export default {
             case 'додати дефект':
                 await defectsController.create(msg);
                 break;
+            case 'дефекти':
+                await defectsController.read(msg);
+                break;
         }
     }
 }

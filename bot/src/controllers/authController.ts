@@ -12,7 +12,7 @@ export default {
                 surname: msg.from?.last_name
             });
         } catch (e) {
-            console.error('User already registered');
+            await bot.sendMessage(msg.chat.id, 'Користувач вже зареєстрований');
         }
     },
     login: async(msg: TelegramBot.Message) => {
@@ -29,7 +29,6 @@ export default {
                     "keyboard": authKeyboards.defects
                 }
             });
-            await bot.sendMessage(msg.chat.id, 'Login successful');
         } catch (e) {
             await bot.sendMessage(msg.chat.id, 'Login failure');
         }
