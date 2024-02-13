@@ -1,8 +1,10 @@
 import { KeyboardButton } from "node-telegram-bot-api";
 
-const AuthKeyboard: KeyboardButton[][] = [
-    [{ text: "Реєстрація" }, { text: "Вхід" }],
-    [{ text: "Допомога" }]
-];
+export default {
+    start: [
+        [{ text: "Реєстрація" }, { text: "Вхід" }],
+        [{ text: "Допомога" }]
+    ] as KeyboardButton[][],
+    defects: [[{ text: "Додати дефект" }, { text: "Допомога" }]]
 
-export default AuthKeyboard;
+};

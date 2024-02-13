@@ -3,6 +3,7 @@ import authController from "./controllers/authController";
 import * as dotenv from "dotenv";
 import AuthKeyboard from "./keyboards/authKeyboards";
 import authHandler from "./handlers/authHandler";
+import defectsHandler from "./handlers/defectsHandler";
 
 dotenv.config();
 
@@ -13,9 +14,10 @@ export const bot: TelegramBot = new TelegramBot(TOKEN, { polling: true });
 bot.onText(/\/start/, async(msg) => {
     await bot.sendMessage(msg.chat.id, "Вітаю, оберіть дію", {
         "reply_markup": {
-            "keyboard": AuthKeyboard
+            "keyboard": AuthKeyboard.start
         }
     })
 });
 
 bot.on('message', authHandler.start);
+bot.on('message', defectsHandler.defects);

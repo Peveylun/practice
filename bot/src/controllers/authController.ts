@@ -1,6 +1,7 @@
 import axios from "axios";
 import TelegramBot from "node-telegram-bot-api";
 import {bot} from "../app";
+import authKeyboards from "../keyboards/authKeyboards";
 
 export default {
     register: async(msg: TelegramBot.Message) => {
@@ -23,6 +24,11 @@ export default {
 
             if (!user.telegramId) return await bot.sendMessage(msg.chat.id, 'Login failure');
 
+            await bot.sendMessage(msg.chat.id, 'Оберіть потрібну опцію', {
+                "reply_markup": {
+                    "keyboard": authKeyboards.defects
+                }
+            });
             await bot.sendMessage(msg.chat.id, 'Login successful');
         } catch (e) {
             await bot.sendMessage(msg.chat.id, 'Login failure');
