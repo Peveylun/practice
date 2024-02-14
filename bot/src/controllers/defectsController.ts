@@ -1,8 +1,33 @@
 import TelegramBot from "node-telegram-bot-api";
-import {bot} from "../app";
+import { bot } from "../app";
 import axios from "axios";
 import saveDefect from "../misc/saveDefect";
-import findTechnicalWorkers from "../misc/findTechnicalWorkers";
+import findTechnicalWorkers, { IUser } from "../misc/findTechnicalWorkers";
+import sharp from "sharp";
+import authKeyboards from "../keyboards/authKeyboards";
+
+let counter = 0;
+let currentMessage: TelegramBot.Message;
+
+export interface IDefect {
+    _id: string;
+    roomNumber: number;
+    description: string;
+    status: boolean;
+    reportedBy: IUser;
+    createdAt: Date;
+    closedAt?: Date;
+    imageUrl: string;
+}
+
+async function closeDefect(msg: TelegramBot.Message, defect: IDefect) {
+    try {
+        await axios.put(`http://localhost:8080/api/defects/${defect._id}/close`);
+        await bot.sendMessage(msg.chat.id, "Дефект закрито успішно");
+    } catch (e) {
+        await bot.sendMessage(msg.chat.id, "Помилка під час закриття дефекту");
+    }
+}
 
 export default {
     create: async(msg: TelegramBot.Message) => {
@@ -10,7 +35,7 @@ export default {
 
         const user = await axios.get(`http://localhost:8080/api/users/${msg.from?.id}`);
 
-        if (user.data.role === 'User') return await bot.sendMessage(chatId, 'Доступ заборонений');
+        if (!(user.data.role === 'Technical')) return await bot.sendMessage(chatId, 'Доступ заборонений');
 
         bot.sendMessage(chatId, "Введіть номер кімнати.").then(() => {
             bot.once("message", (msg) => {
@@ -42,14 +67,42 @@ export default {
     },
     read: async(msg: TelegramBot.Message) => {
         try {
+            bot.removeTextListener(/Закрити дефект/);
             const chatId = msg.chat.id;
+            currentMessage = msg;
 
-            const defects = await axios.get(`http://localhost:8080/api/defects`);
-            const defect = defects.data[0];
-            const template = `Номер кімнати: ${defect.roomNumber}\nОпис: ${defect.description}\nФото:`
-            await bot.sendMessage(chatId, template);
-            console.log(`${__filename}/../../uploads/${defect.imageUrl}`);
-            await bot.sendPhoto(chatId, 'test');
-        } catch (e) { console.log('Error')}
+            const user = await axios.get(`http://localhost:8080/api/users/${msg.from?.id}`);
+
+            if (!(user.data.role === 'Repairman')) return await bot.sendMessage(chatId, 'У вас немає доступу');
+
+            const defects = await axios.get(`http://localhost:8080/api/defects/getOpened`);
+            const defect = defects.data[counter];
+
+            if (defect == null) return await bot.sendMessage(chatId, 'Дефекти відсутні');
+
+            if (counter < defects.data.length - 1) counter++;
+            else if (counter === defects.data.length - 1) counter = 0;
+
+            const imageResponse = await axios.get(`http://localhost:8080/api/defects/${defect._id}`, {
+                responseType: 'arraybuffer'
+            });
+
+            const template = `Номер кімнати: ${defect.roomNumber}\nОпис: ${defect.description}`;
+            await bot.sendMessage(chatId, template)
+            await bot.sendPhoto(chatId, Buffer.from(imageResponse.data, 'binary'));
+
+            await bot.sendMessage(chatId, 'Опції', {
+                reply_markup: {
+                    keyboard: authKeyboards.closeDefect
+                }
+            });
+
+            // Прослуховуємо подію натискання кнопки та викликаємо другу функцію
+            bot.onText(/Закрити дефект/, async (msg) => {
+                await closeDefect(msg, defect);
+            });
+        } catch (e) {
+            console.log(e);
+        }
     }
 }

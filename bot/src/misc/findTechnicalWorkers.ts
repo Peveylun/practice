@@ -17,7 +17,6 @@ export default {
             }
         }
 
-        // @ts-ignore
         return res;
     }
 }

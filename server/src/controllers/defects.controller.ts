@@ -1,8 +1,8 @@
 import {Request, Response} from "express";
 import {Defect} from "../models/defect.model";
 import {User} from "../models/user.model";
-import * as fs from "fs";
 import path from "path";
+import * as fs from "fs";
 
 export default {
     create: async (req: Request, res: Response) => {
@@ -32,6 +32,13 @@ export default {
         } catch (e) { res.status(500).json({error: 'Get defects failure'}) }
     },
 
+    readOpenedDefects: async(_: Request, res: Response) => {
+        try {
+            const users = await Defect.find({status: false}).exec();
+            res.status(200).json(users);
+        } catch (e) { res.status(500).json({error: 'Get defects failure'}) }
+    },
+
     update: async(req: Request, res: Response) => {
         try {
             const updatedDefect = await Defect.findByIdAndUpdate(req.params.id, {$set: {
@@ -45,16 +52,16 @@ export default {
 
     readImage: async(req: Request, res: Response) => {
         try {
-            const defect = await Defect.findOne({_id: req.params.id}).exec();
+            const defect = await Defect.findOne({_id: req.params._id}).exec();
             if (!defect) return res.json({error: 'Defect not found'});
             const filename = defect.imageUrl;
 
-            const promise = fs.promises.readFile(path.join(__dirname, '..', '..', 'uploads', filename));
-
-            Promise.resolve(promise).then(buffer => {
-                res.json({photo: buffer});
-            })
-
-        } catch (e) {console.log(e)}
+            const imagePath = path.join(__dirname, '..', '..', 'uploads', filename);
+            const imageBuffer = fs.readFileSync(imagePath);
+            res.writeHead(200, {'Content-Type': 'image/jpeg'});
+            res.end(imageBuffer, 'binary');
+        } catch (e) {
+            console.log(e);
+        }
     }
 }

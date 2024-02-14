@@ -1,5 +1,4 @@
-import TelegramBot, {KeyboardButton} from "node-telegram-bot-api";
-import authController from "./controllers/authController";
+import TelegramBot from "node-telegram-bot-api";
 import * as dotenv from "dotenv";
 import AuthKeyboard from "./keyboards/authKeyboards";
 import authHandler from "./handlers/authHandler";
@@ -19,5 +18,7 @@ bot.onText(/\/start/, async(msg) => {
     })
 });
 
+let defect: any;
+
 bot.on('message', authHandler.start);
-bot.on('message', defectsHandler.defects);
+bot.on('message', defectsHandler.defects(defect));

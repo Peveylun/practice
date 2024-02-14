@@ -11,6 +11,8 @@ export default {
                 name: msg.from?.first_name,
                 surname: msg.from?.last_name
             });
+
+            await bot.sendMessage(msg.chat.id, 'Ви успішно зареєструвалися, очікуйте відповідь адміністратора.');
         } catch (e) {
             await bot.sendMessage(msg.chat.id, 'Користувач вже зареєстрований');
         }
@@ -22,7 +24,7 @@ export default {
 
             console.log(user);
 
-            if (!user.telegramId) return await bot.sendMessage(msg.chat.id, 'Login failure');
+            if (!user.telegramId) return await bot.sendMessage(msg.chat.id, 'Користувача не знайдено');
 
             await bot.sendMessage(msg.chat.id, 'Оберіть потрібну опцію', {
                 "reply_markup": {

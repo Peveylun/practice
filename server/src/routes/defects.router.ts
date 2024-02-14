@@ -7,7 +7,9 @@ const router: Router = Router();
 
 router.get('/', DefectsController.read);
 
-router.get('/:id', DefectsController.readImage);
+router.get('/getOpened', DefectsController.readOpenedDefects);
+
+router.get('/:_id', DefectsController.readImage);
 
 router.put('/:id/close', DefectsController.update);
 
