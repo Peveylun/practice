@@ -1,12 +1,15 @@
 import './App.css'
+import Login from "./components/login/login.tsx";
+import AuthProvider from "react-auth-kit";
+import store from "./misc/store.ts";
 
 function App() {
 
   return (
     <>
-      <div>
-          <p>Hello, World</p>
-      </div>
+      <AuthProvider store={store}>
+          <Login></Login>
+      </AuthProvider>
     </>
   )
 }

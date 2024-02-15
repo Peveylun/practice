@@ -61,7 +61,7 @@ export default {
             res.writeHead(200, {'Content-Type': 'image/jpeg'});
             res.end(imageBuffer, 'binary');
         } catch (e) {
-            console.log(e);
+            res.status(500).json({error: 'Image uploading error'});
         }
     }
 }

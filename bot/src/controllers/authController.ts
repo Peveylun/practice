@@ -6,7 +6,7 @@ import authKeyboards from "../keyboards/authKeyboards";
 export default {
     register: async(msg: TelegramBot.Message) => {
         try {
-            await axios.post('http://localhost:8080/api/auth', {
+            await axios.post('http://localhost:8080/api/auth/register', {
                 telegramId: msg.from?.id,
                 name: msg.from?.first_name,
                 surname: msg.from?.last_name

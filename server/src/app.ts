@@ -1,6 +1,7 @@
-import express, {Express, Request, Response} from "express";
+import express, { Express, Request, Response } from "express";
 import * as dotenv from "dotenv";
 import bodyParser from "body-parser";
+import cors from 'cors';
 
 import Database from "./misc/db";
 
@@ -22,9 +23,13 @@ new Database(MONGO_URI)
 const app: Express = express();
 
 app.use(bodyParser.json());
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static('defectsImage'));
+
+app.use(cors({
+    origin: "http://localhost:5173"
+}));
 
 app.use('/api/auth', authRouter);
 app.use('/api/users', usersRouter);
