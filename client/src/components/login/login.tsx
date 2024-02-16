@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import axios from "axios";
 
 const Login = () => {
-    const [loginData, setLoginData] = useState({ login: "", password: "" });
+    const [loginData, setLoginData] = useState({login: "", password: ""});
     const [error, setError] = useState<string | null>(null);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
+        const {name, value} = e.target;
         setLoginData((prevData) => ({
             ...prevData,
             [name]: value,

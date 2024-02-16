@@ -1,6 +1,6 @@
-import { configureStore } from '@reduxjs/toolkit';
+import {configureStore} from '@reduxjs/toolkit';
 import authReducer from '../reducers/authReducer.ts';
-import {thunk} from "redux-thunk"; // Підключіть ваш кореневий редуктор
+import {thunk} from "redux-thunk";
 
 const store = configureStore({
     reducer: authReducer,

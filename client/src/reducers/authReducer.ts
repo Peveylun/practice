@@ -1,19 +1,30 @@
-import { LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT } from '../actions/types';
+import { LOGIN_FAILURE, LOGIN_SUCCESS, LOGOUT } from '../actions/types';
+import { AuthAction } from '../actions/authActions.ts';
 
-const initialState = {
+interface AuthState {
+    isAuthenticated: boolean;
+    tokenObject: string | null;
+    user: string | null;
+    error: {
+        message: string;
+        code?: number;
+    } | null;
+}
+
+const initialState: AuthState = {
     isAuthenticated: false,
-    token: null,
+    tokenObject: null,
     user: null,
     error: null,
 };
 
-const authReducer = (state = initialState, action: { type: string; payload: { token: string; user: string; error: string; }; }) => {
+const authReducer = (state: AuthState = initialState, action: AuthAction): AuthState => {
     switch (action.type) {
         case LOGIN_SUCCESS:
             return {
                 ...state,
                 isAuthenticated: true,
-                token: action.payload.token,
+                tokenObject: action.payload.token,
                 user: action.payload.user,
                 error: null
             };
@@ -21,15 +32,17 @@ const authReducer = (state = initialState, action: { type: string; payload: { to
             return {
                 ...state,
                 isAuthenticated: false,
-                token: null,
+                tokenObject: null,
                 user: null,
-                error: action.payload.error
+                error: {
+                    message: action.payload.error
+                }
             };
         case LOGOUT:
             return {
                 ...state,
                 isAuthenticated: false,
-                token: null,
+                tokenObject: null,
                 user: null,
                 error: null
             };
