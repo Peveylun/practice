@@ -4,7 +4,6 @@ export interface IUser {
     surname: string;
     registeredAt: Date;
     role: string;
-    work_score: number;
     access: boolean;
 }
 

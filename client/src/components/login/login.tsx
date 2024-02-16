@@ -24,7 +24,7 @@ const Login = () => {
             localStorage.setItem("token", response.data.token);
             console.log(localStorage);
             console.log('login successful');
-            // window.location.href = "/dashboard";
+            window.location.href = "/";
         } catch (error) {
             console.log(localStorage);
             setError("Неправильний email або пароль.");

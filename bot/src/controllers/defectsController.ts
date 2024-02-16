@@ -2,26 +2,18 @@ import TelegramBot from "node-telegram-bot-api";
 import { bot } from "../app";
 import axios from "axios";
 import saveDefect from "../misc/saveDefect";
-import findTechnicalWorkers, { IUser } from "../misc/findTechnicalWorkers";
-import sharp from "sharp";
+import findTechnicalWorkers from "../misc/findTechnicalWorkers";
 import authKeyboards from "../keyboards/authKeyboards";
+import state from "../misc/state";
+import { IDefect } from "../misc/state";
 
 let counter = 0;
-let currentMessage: TelegramBot.Message;
 
-export interface IDefect {
-    _id: string;
-    roomNumber: number;
-    description: string;
-    status: boolean;
-    reportedBy: IUser;
-    createdAt: Date;
-    closedAt?: Date;
-    imageUrl: string;
-}
 
-async function closeDefect(msg: TelegramBot.Message, defect: IDefect) {
+
+export async function closeDefect(msg: TelegramBot.Message, defect: IDefect) {
     try {
+        console.log(defect);
         await axios.put(`http://localhost:8080/api/defects/${defect._id}/close`);
         await bot.sendMessage(msg.chat.id, "Дефект закрито успішно");
     } catch (e) {
@@ -69,7 +61,6 @@ export default {
         try {
             bot.removeTextListener(/Закрити дефект/);
             const chatId = msg.chat.id;
-            currentMessage = msg;
 
             const user = await axios.get(`http://localhost:8080/api/users/${msg.from?.id}`);
 
@@ -78,7 +69,9 @@ export default {
             const defects = await axios.get(`http://localhost:8080/api/defects/getOpened`);
             const defect = defects.data[counter];
 
-            if (defect == null) return await bot.sendMessage(chatId, 'Дефекти відсутні');
+            if (!defect) return await bot.sendMessage(chatId, 'Дефекти відсутні');
+
+            state.setState({ defect: defect });
 
             if (counter < defects.data.length - 1) counter++;
             else if (counter === defects.data.length - 1) counter = 0;
@@ -97,12 +90,9 @@ export default {
                 }
             });
 
-            // Прослуховуємо подію натискання кнопки та викликаємо другу функцію
-            bot.onText(/Закрити дефект/, async (msg) => {
-                await closeDefect(msg, defect);
-            });
         } catch (e) {
             console.log(e);
         }
     }
+
 }
