@@ -8,6 +8,7 @@ import Database from "./misc/db";
 import authRouter from "./routes/auth.router";
 import usersRouter from "./routes/users.router";
 import defectsRouter from "./routes/defects.router";
+import adminsRouter from "./routes/admin.router";
 
 dotenv.config()
 
@@ -34,6 +35,7 @@ app.use(cors({
 app.use('/api/auth', authRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/defects', defectsRouter);
+app.use('/api/admins', adminsRouter)
 
 app.get('/', (_: Request, res: Response) => {
     res.send("Hello, World");

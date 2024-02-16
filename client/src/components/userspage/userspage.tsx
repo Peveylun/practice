@@ -61,7 +61,7 @@ const UsersPage = () => {
     };
 
     return (
-        <div className="d-block container-fluid">
+        <div className="d-block container">
             <div className="container d-flex justify-content-around mb-2">
                 <h3>Список користувачів</h3>
                 <p>Виберіть один із фільтрів</p>

@@ -23,7 +23,7 @@ const UserList: React.FC<UserListProps> = ({ users }) => {
                 </tr>
                 </thead>
                 <tbody>
-                {users.map((user, index) => (
+                {users.map((user: IUser, index) => (
                     <tr className="listItem" key={user.telegramId}>
                         <td>{index + 1}</td>
                         <td>{user.telegramId}</td>

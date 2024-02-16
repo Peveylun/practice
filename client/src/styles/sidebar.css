@@ -1,0 +1,11 @@
+.sidebar {
+    width: 250px;
+}
+
+.nav-link {
+    color: white !important;
+}
+
+.nav-link:hover {
+    color: #FF9933 !important;
+}

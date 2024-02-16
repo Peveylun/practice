@@ -1,8 +1,3 @@
-.sidebar {
-    height: 100%;
-    width: 200px;
-}
-
 .app {
     display: flex;
     height: 100vh;
