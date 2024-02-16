@@ -1,5 +1,6 @@
 import { SetStateAction, useState, useEffect } from "react";
 import axios from "axios";
+import UserList from "../userlist/userlist.tsx";
 
 interface IUser {
     telegramId: number;
@@ -10,7 +11,7 @@ interface IUser {
     access: boolean;
 }
 
-const Userspage = () => {
+const UsersPage = () => {
     const [users, setUsers] = useState<IUser[]>([]);
     const [selectedPosition, setSelectedPosition] = useState<string>('');
     const [selectedAccess, setSelectedAccess] = useState<boolean | null>(null);
@@ -22,7 +23,8 @@ const Userspage = () => {
             setUsers(res.data);
         }
 
-        fetchUsers();
+        fetchUsers()
+            .catch(e => {console.log(e)});
     }, []);
 
     useEffect(() => {
@@ -59,33 +61,34 @@ const Userspage = () => {
     };
 
     return (
-        <>
-            <div>
+        <div className="d-block container-fluid">
+            <div className="container d-flex justify-content-around mb-2">
                 <h3>Список користувачів</h3>
                 <p>Виберіть один із фільтрів</p>
-                <div className="access-filter">
-                    <select value={selectedPosition} onChange={handlePositionChange} id="position">
-                        <option value="">Всі</option>
-                        <option value="User">User</option>
-                        <option value="Repairman">Repairman</option>
-                        <option value="Technical">Technical</option>
-                    </select>
-                </div>
-                <div className="position-filter">
-                    <select value={selectedAccess === null ? '' : String(selectedAccess)} onChange={handleAccessChange} id="access">
-                        <option value="">Всі</option>
-                        <option value="true">Активні</option>
-                        <option value="false">Неактивні</option>
-                    </select>
+                <div className="container">
+                    <div className="access-filter">
+                        <label htmlFor="position" className="m-1">Роль:</label>
+                        <select value={selectedPosition} onChange={handlePositionChange} id="position">
+                            <option value="">Всі</option>
+                            <option value="User">User</option>
+                            <option value="Repairman">Repairman</option>
+                            <option value="Technical">Technical</option>
+                        </select>
+                    </div>
+                    <div className="position-filter">
+                        <label htmlFor="access" className="m-1">Доступ:</label>
+                        <select value={selectedAccess === null ? '' : String(selectedAccess)}
+                                onChange={handleAccessChange} id="access">
+                            <option value="">Всі</option>
+                            <option value="true">Активні</option>
+                            <option value="false">Неактивні</option>
+                        </select>
+                    </div>
                 </div>
             </div>
-            <ul>
-                {filteredUsers.map(user => (
-                    <li key={user.telegramId}>{user.name}</li>
-                ))}
-            </ul>
-        </>
+            <UserList users={filteredUsers}></UserList>
+        </div>
     )
 }
 
-export default Userspage;
+export default UsersPage;
