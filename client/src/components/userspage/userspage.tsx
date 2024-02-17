@@ -1,6 +1,6 @@
-import { SetStateAction, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
-import UserList from "../userlist/userlist.tsx";
+import UserList from "../userlist/userlist";
 
 interface IUser {
     telegramId: number;
@@ -19,12 +19,15 @@ const UsersPage = () => {
 
     useEffect(() => {
         const fetchUsers = async () => {
-            const res = await axios.get('http://localhost:8080/api/users');
-            setUsers(res.data);
-        }
+            try {
+                const res = await axios.get<IUser[]>('http://localhost:8080/api/users');
+                setUsers(res.data);
+            } catch (error) {
+                console.log(error);
+            }
+        };
 
-        fetchUsers()
-            .catch(e => {console.log(e)});
+        fetchUsers();
     }, []);
 
     useEffect(() => {
@@ -50,45 +53,49 @@ const UsersPage = () => {
         setFilteredUsers(filteredUsersIntersection);
     };
 
-    const handlePositionChange = (event: { target: { value: SetStateAction<string>; }; }) => {
+    const handlePositionChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedPosition(event.target.value);
-        filterUsers();
     };
 
-    const handleAccessChange = (event: { target: { value: SetStateAction<string>; }; }) => {
+    const handleAccessChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedAccess(event.target.value === '' ? null : event.target.value === 'true');
-        filterUsers();
     };
+
+    useEffect(() => {
+        filterUsers();
+    }, [selectedPosition, selectedAccess, users]);
 
     return (
         <div className="d-block container">
             <div className="container d-flex justify-content-around mb-2">
                 <h3>Список користувачів</h3>
-                <p>Виберіть один із фільтрів</p>
-                <div className="container">
-                    <div className="access-filter">
-                        <label htmlFor="position" className="m-1">Роль:</label>
-                        <select value={selectedPosition} onChange={handlePositionChange} id="position">
-                            <option value="">Всі</option>
-                            <option value="User">User</option>
-                            <option value="Repairman">Repairman</option>
-                            <option value="Technical">Technical</option>
-                        </select>
-                    </div>
-                    <div className="position-filter">
-                        <label htmlFor="access" className="m-1">Доступ:</label>
-                        <select value={selectedAccess === null ? '' : String(selectedAccess)}
-                                onChange={handleAccessChange} id="access">
-                            <option value="">Всі</option>
-                            <option value="true">Активні</option>
-                            <option value="false">Неактивні</option>
-                        </select>
+                <div className="d-flex align-items-center">
+                    <p className="my-2 mx-3">Оберіть фільтри</p>
+                    <div>
+                        <div className="access-filter">
+                            <label htmlFor="position" className="m-1">Роль:</label>
+                            <select value={selectedPosition} onChange={handlePositionChange} id="position">
+                                <option value="">Всі</option>
+                                <option value="User">User</option>
+                                <option value="Repairman">Repairman</option>
+                                <option value="Technical">Technical</option>
+                            </select>
+                        </div>
+                        <div className="position-filter">
+                            <label htmlFor="access" className="m-1">Доступ:</label>
+                            <select value={selectedAccess === null ? '' : String(selectedAccess)}
+                                    onChange={handleAccessChange} id="access">
+                                <option value="">Всі</option>
+                                <option value="true">Активні</option>
+                                <option value="false">Неактивні</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
             </div>
             <UserList users={filteredUsers}></UserList>
         </div>
-    )
+    );
 }
 
 export default UsersPage;

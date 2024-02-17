@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import axios from "axios";
 import {Table} from "react-bootstrap";
 
@@ -10,11 +10,8 @@ interface IAdmin {
     surname: string;
 }
 
-interface AdminsProps {
-    admins: IAdmin[];
-}
 
-const AdminsPage: React.FC<AdminsProps> = () => {
+const AdminsPage = () => {
     const [admins, setAdmins] = useState([])
 
     useEffect(() => {

@@ -27,8 +27,8 @@ export default {
 
     read: async(_: Request, res: Response) => {
         try {
-            const users = await Defect.find();
-            res.status(200).json(users);
+            const defects = await Defect.find().populate('reportedBy');
+            res.status(200).json(defects);
         } catch (e) { res.status(500).json({error: 'Get defects failure'}) }
     },
 
