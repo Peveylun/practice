@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { IUser } from '../../interfaces/user';
+import { IUser } from '../../interfaces/user.ts';
 import {Table} from "react-bootstrap";
 import "../../styles/userlist.css";
 

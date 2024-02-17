@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import UserList from "../userlist/userlist";
+import UserList from "./userlist.tsx";
 
 interface IUser {
     telegramId: number;
@@ -27,7 +27,8 @@ const UsersPage = () => {
             }
         };
 
-        fetchUsers();
+        fetchUsers()
+            .catch(e => console.log(e));
     }, []);
 
     useEffect(() => {
@@ -66,30 +67,29 @@ const UsersPage = () => {
     }, [selectedPosition, selectedAccess, users]);
 
     return (
-        <div className="d-block container">
-            <div className="container d-flex justify-content-around mb-2">
-                <h3>Список користувачів</h3>
-                <div className="d-flex align-items-center">
-                    <p className="my-2 mx-3">Оберіть фільтри</p>
-                    <div>
-                        <div className="access-filter">
-                            <label htmlFor="position" className="m-1">Роль:</label>
-                            <select value={selectedPosition} onChange={handlePositionChange} id="position">
-                                <option value="">Всі</option>
-                                <option value="User">User</option>
-                                <option value="Repairman">Repairman</option>
-                                <option value="Technical">Technical</option>
-                            </select>
-                        </div>
-                        <div className="position-filter">
-                            <label htmlFor="access" className="m-1">Доступ:</label>
-                            <select value={selectedAccess === null ? '' : String(selectedAccess)}
-                                    onChange={handleAccessChange} id="access">
-                                <option value="">Всі</option>
-                                <option value="true">Активні</option>
-                                <option value="false">Неактивні</option>
-                            </select>
-                        </div>
+        <div className="container w-100">
+            <div className="container mb-2">
+                <div className="container w-100 d-flex justify-content-center">
+                    <h3>Список користувачів</h3>
+                </div>
+                <div className="container d-flex align-items-center">
+                    <div className="access-filter">
+                        <label htmlFor="position" className="m-1">Роль:</label>
+                        <select value={selectedPosition} onChange={handlePositionChange} id="position">
+                            <option value="">Всі</option>
+                            <option value="User">User</option>
+                            <option value="Repairman">Repairman</option>
+                            <option value="Technical">Technical</option>
+                        </select>
+                    </div>
+                    <div className="position-filter">
+                        <label htmlFor="access" className="m-1">Доступ:</label>
+                        <select value={selectedAccess === null ? '' : String(selectedAccess)}
+                                onChange={handleAccessChange} id="access">
+                            <option value="">Всі</option>
+                            <option value="true">Активні</option>
+                            <option value="false">Неактивні</option>
+                        </select>
                     </div>
                 </div>
             </div>

@@ -1,12 +1,12 @@
 import './App.css';
 import Login from './components/login/login.tsx';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import Homepage from './components/homepage/homepage.tsx';
-import UsersPage from './components/userspage/userspage.tsx';
+import Homepage from './components/homepage/homePage.tsx';
+import UsersPage from './components/userspage/usersPage.tsx';
 import { useEffect, useState } from 'react';
 import PageNotFound from "./components/404/404.tsx";
-import AdminsPage from "./components/adminspage/adminspage.tsx";
-import EditUserPage from "./components/editUser/editUserPage.tsx";
+import AdminsPage from "./components/adminspage/adminsPage.tsx";
+import EditUserPage from "./components/edituser/editUserPage.tsx";
 import DefectsPage from "./components/defectspage/defectsPage.tsx";
 import Sidebar from "./components/sidebar/sidebar.tsx";
 

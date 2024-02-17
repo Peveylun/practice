@@ -2,7 +2,7 @@ import {Link} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {jwtDecode} from "jwt-decode";
 import "../../styles/sidebar.css"
-import AdminCard from "../admincard/admincard.tsx";
+import AdminCard from "../admincard/adminCard.tsx";
 
 interface JwtPayload {
     name: string;
