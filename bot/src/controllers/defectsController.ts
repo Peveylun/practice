@@ -59,7 +59,6 @@ export default {
     },
     read: async(msg: TelegramBot.Message) => {
         try {
-            bot.removeTextListener(/Закрити дефект/);
             const chatId = msg.chat.id;
 
             const user = await axios.get(`http://localhost:8080/api/users/${msg.from?.id}`);
