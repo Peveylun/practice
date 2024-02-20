@@ -8,10 +8,10 @@ export interface IUser {
 }
 
 export default {
-    findTechnicalWorkers: (users: Array<IUser>) => {
+    findRepairmanWorkers: (users: Array<IUser>) => {
         let res: Array<IUser> = [];
         for (const i of users) {
-            if (i.role === 'Technical') {
+            if (i.role === 'Repairman') {
                 res.push(i);
             }
         }

@@ -2,7 +2,7 @@ import TelegramBot from "node-telegram-bot-api";
 import { bot } from "../app";
 import axios from "axios";
 import saveDefect from "../misc/saveDefect";
-import findTechnicalWorkers from "../misc/findTechnicalWorkers";
+import findTechnicalWorkers from "../misc/findRepairmanWorkers";
 import authKeyboards from "../keyboards/authKeyboards";
 import state from "../misc/state";
 import { IDefect } from "../misc/state";
@@ -44,7 +44,7 @@ export default {
                                 bot.once("photo", async (msg) => {
                                     await saveDefect.saveDefect(msg, roomNumber, description);
                                     const res = await axios.get(`http://localhost:8080/api/users`);
-                                    const users = findTechnicalWorkers.findTechnicalWorkers(res.data);
+                                    const users = findTechnicalWorkers.findRepairmanWorkers(res.data);
                                     for (const i of users) {
                                         try {
                                             await bot.sendMessage(i.telegramId, 'Зареєстровано новий дефект');
